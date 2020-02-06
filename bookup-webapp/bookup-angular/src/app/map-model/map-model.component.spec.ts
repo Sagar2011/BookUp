@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MapModelComponent } from './map-model.component';
 
 describe('MapModelComponent', () => {
@@ -7,8 +6,7 @@ describe('MapModelComponent', () => {
   let fixture: ComponentFixture<MapModelComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      
+    TestBed.configureTestingModule({ 
       declarations: [ MapModelComponent ]
     })
     .compileComponents();
@@ -19,6 +17,4 @@ describe('MapModelComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  
 });
