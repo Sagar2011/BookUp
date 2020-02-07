@@ -1,27 +1,11 @@
-# ----------------------------#
-#        JAVA BUILD           #
-# ----------------------------#
 FROM maven:3.6-jdk-8 AS build
-
 COPY pom.xml .
-
-# Expected to download dependencies but not build
-RUN mvn -Dmaven.repo.local=$MVN_LOCAL_REPO dependency:go-offline
-
-# Now copy actual source, i.e., this line should be after downloading dependencies to avoid repeated download when src changes
+RUN mvn dependency:go-offline
 COPY src src
+RUN mvn -f pom.xml clean package -DskipTests=true
 
-# Build now
-RUN mvn -Dmaven.repo.local=$MVN_LOCAL_REPO -f pom.xml clean package -DskipTests
 
-# -------------------------------#
-#        JAVA Service            #
-# -------------------------------#
 FROM openjdk:8
-
-EXPOSE 8000
-
-# Copy the built service jars and resources
-COPY --from=build /target/UserMicroservice.jar userMicroservice.jar
-
-ENTRYPOINT ["java","-jar","userMicroservice.jar"]
+#EXPOSE 8000
+COPY --from=build /target/UserMicroservice.jar user.jar
+ENTRYPOINT ["java","-jar","user.jar"]

@@ -1,12 +1,16 @@
 package com.bookup.apigateway.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.bookup.apigateway.filter.JwtFilter;
 
+@Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// For implementing security on api endpoints
@@ -21,8 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity webSecurity) {
 		webSecurity.ignoring().antMatchers("/", "/assets/**", "/*.js", "/*.css", "/*.eot", "/*.svg", "/*.woff2",
-				"/*.ttf", "/*.woff", "/*.jpg", "/*.png", "/*.html", "/user/googlelogin",
-				 "/user/search");
+				"/*.ttf", "/*.woff", "/*.jpg", "/*.png", "/*.html", "/user/googlelogin", "/user/search", "/user/check");
 	}
 
 }

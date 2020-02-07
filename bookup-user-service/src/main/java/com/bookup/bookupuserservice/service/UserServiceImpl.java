@@ -21,11 +21,10 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 
 @Service
-public class UserServiceImpl implements IUserService{
-	
-	@Autowired
+public class UserServiceImpl implements IUserService {
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Autowired
 	private IUserRepository userRepo;
 

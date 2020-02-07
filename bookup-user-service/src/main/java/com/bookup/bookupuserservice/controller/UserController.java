@@ -35,7 +35,6 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 
-	@Autowired
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private static final String jwtTokenCookieName = "BOOK_UP";

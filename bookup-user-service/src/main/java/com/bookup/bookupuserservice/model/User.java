@@ -1,9 +1,11 @@
 package com.bookup.bookupuserservice.model;
 
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
 @Component
+@Document(collection = "User")
 public class User {
 
 	private String name;
