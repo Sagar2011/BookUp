@@ -1,9 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MapModelComponent} from '../map-model/map-model.component';
+import { LoginService } from 'src/app/login.service';
+import { LoginDialogBoxComponent } from 'src/app/login-dialog-box/login-dialog-box.component';
+
+import { Router } from '@angular/router';
 interface TimeSlot {
   value: string;
   viewValue: string;
 }
+
+export interface ResponseModel {
+  statusCode: number;
+  message: string;
+ }
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -12,7 +24,7 @@ interface TimeSlot {
 
 export class DashboardComponent implements OnInit {
   _isDisabled:boolean;
-  constructor() { }
+  constructor(private router: Router, private loginService: LoginService, public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -49,21 +61,48 @@ export class DashboardComponent implements OnInit {
     return "url('https://c1.wallpaperflare.com/preview/284/720/961/2cv-citroen-road-avenue.jpg')";
     
   }
+ 
   form = new FormGroup({
-    city: new FormControl({value: ' ', disabled: true},),
+    city: new FormControl(''),
     tripDate:new FormControl(''),
     timeSlot:new FormControl(''),
-    city_from: new FormControl({value: ' Banglore', disabled: true},),
-    
+    city_from: new FormControl({value:'Banglore', disabled: true},),
+    distance:new FormControl(''),
   });
    todaydate:Date = new Date();
   set isDisabled(value: boolean) {
     this._isDisabled = value;
     if(value) {
-     this.form.controls['name'].disable();
-    } 
+     this.form.controls['city'].disable();
+    } else{
+      this.form.controls['city'].enable();
+    }
    }
    show(){
      console.log("formvalue",this.form.value);
+          this.dialog.open(LoginDialogBoxComponent, {
+            width: '400px', height: '250px',
+          });
    }
+   openDialog(): void {
+    
+    const dialogRef = this.dialog.open(MapModelComponent, {
+      width: '750px',
+    
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log('result------>',result.data.kmDistance)
+
+    this.form.value.distance=result.data.kmDistance;
+    
+    this.form.value.city=result.data.destination;
+
+      
+      this.form.controls['distance'].setValue(result.data.kmDistance);
+      this.form.controls['city'].setValue(result.data.destination);
+      console.log("form final value-->",this.form.value);
+    });
+  }
 }
