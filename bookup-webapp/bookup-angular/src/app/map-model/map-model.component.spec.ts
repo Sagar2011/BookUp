@@ -8,10 +8,8 @@ describe('MapModelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      
-      declarations: [ MapModelComponent ]
-    })
-    .compileComponents();
+      declarations: [MapModelComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,6 +17,4 @@ describe('MapModelComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  
 });
