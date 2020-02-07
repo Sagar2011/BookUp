@@ -6,6 +6,7 @@ interface TimeSlot {
   value: string;
   viewValue: string;
 }
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -51,24 +52,29 @@ export class DashboardComponent implements OnInit {
     return "url('https://c1.wallpaperflare.com/preview/284/720/961/2cv-citroen-road-avenue.jpg')";
     
   }
+ 
   form = new FormGroup({
-    city: new FormControl({value: ' ', disabled: true},),
+    city: new FormControl(''),
     tripDate:new FormControl(''),
     timeSlot:new FormControl(''),
     city_from: new FormControl({value:'Banglore', disabled: true},),
-    
+    distance:new FormControl(''),
   });
    todaydate:Date = new Date();
   set isDisabled(value: boolean) {
     this._isDisabled = value;
     if(value) {
-     this.form.controls['city_from'].disable();
-    } 
+     this.form.controls['city'].disable();
+    } else{
+      this.form.controls['city'].enable();
+    }
    }
    show(){
      console.log("formvalue",this.form.value);
+     console.log('distance--->',this.form.value.distance);
    }
    openDialog(): void {
+    
     const dialogRef = this.dialog.open(MapModelComponent, {
       width: '750px',
     
@@ -76,7 +82,16 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      console.log('result------>',result.data.kmDistance)
+
+    this.form.value.distance=result.data.kmDistance;
+    
+    this.form.value.city=result.data.destination;
+
       
+      this.form.controls['distance'].setValue(result.data.kmDistance);
+      this.form.controls['city'].setValue(result.data.destination);
+      console.log("form final value-->",this.form.value);
     });
   }
 }

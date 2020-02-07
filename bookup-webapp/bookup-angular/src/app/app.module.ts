@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+
 import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,13 +23,17 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { MapModelComponent } from './map-model/map-model.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
+import { BookingHistoryComponent } from './booking-history/booking-history.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     DashboardComponent,
-    MapModelComponent
+    MapModelComponent,
+    BookingHistoryComponent,
+ 
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatNativeDateModule,
     MatSelectModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule
  
   ],
   providers: [],

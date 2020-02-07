@@ -1,14 +1,22 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit,Inject } from "@angular/core";
 import { LocationService } from '../location.service';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { DashboardComponent} from '../dashboard/dashboard.component';
 declare var ol: any;
+export interface DialogData {
+ 
+}
 @Component({
   selector: "app-map-model",
   templateUrl: "./map-model.component.html",
   styleUrls: ["./map-model.component.css"]
 })
 export class MapModelComponent implements OnInit {
+   public object={
+    kmDistance: '' ,
+    destination: ''
+  }
   latitude = 12.9716;
   longitude = 77.5946;
   destLat: number;
@@ -19,7 +27,8 @@ export class MapModelComponent implements OnInit {
   address: any;
   destination: any;
   choice: FormGroup;
-  constructor(private location: LocationService, fb:FormBuilder) {
+  constructor(private location: LocationService, fb:FormBuilder, public dialogRef: MatDialogRef< DashboardComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.choice = fb.group({
       enterLocation: new FormControl('')
     });
@@ -249,5 +258,12 @@ export class MapModelComponent implements OnInit {
 
     this.map.addLayer(this.vectorLayer);
     this.vectorLayer.set("name", "selectvector");
+  }
+  
+  onNoClick(): void {
+    this.object.kmDistance=this.kmDistance;
+    this.object.destination=this.destination;
+    console.log('objectvalue------>',this.object);
+    this.dialogRef.close({data: this.object});
   }
 }
