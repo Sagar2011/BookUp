@@ -2,10 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MapModelComponent} from '../map-model/map-model.component';
+import { LoginService } from 'src/app/login.service';
+import { LoginDialogBoxComponent } from 'src/app/login-dialog-box/login-dialog-box.component';
+
+import { Router } from '@angular/router';
 interface TimeSlot {
   value: string;
   viewValue: string;
 }
+
+export interface ResponseModel {
+  statusCode: number;
+  message: string;
+ }
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +24,7 @@ interface TimeSlot {
 
 export class DashboardComponent implements OnInit {
   _isDisabled:boolean;
-  constructor(public dialog: MatDialog) { }
+  constructor(private router: Router, private loginService: LoginService, public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -71,7 +80,9 @@ export class DashboardComponent implements OnInit {
    }
    show(){
      console.log("formvalue",this.form.value);
-     console.log('distance--->',this.form.value.distance);
+          this.dialog.open(LoginDialogBoxComponent, {
+            width: '400px', height: '250px',
+          });
    }
    openDialog(): void {
     
