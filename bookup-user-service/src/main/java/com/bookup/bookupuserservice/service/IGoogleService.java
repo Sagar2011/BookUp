@@ -1,13 +1,16 @@
 package com.bookup.bookupuserservice.service;
 
+import org.springframework.dao.DuplicateKeyException;
+
+import com.bookup.bookupuserservice.exception.UserNotFoundException;
 import com.bookup.bookupuserservice.model.User;
 
 public interface IGoogleService {
 
-	String googlelogin();
+	String getAccessToken(String code) throws UserNotFoundException;
 
-	String getGoogleAccessToken(String code);
+	User getUserProfile(String accessToken) throws UserNotFoundException;
 
-	User getGoogleUserProfile(String accessToken);
+	void addUserData(User user) throws DuplicateKeyException;
 
 }
