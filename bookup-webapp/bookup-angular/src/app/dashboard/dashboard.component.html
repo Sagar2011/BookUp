@@ -12,12 +12,14 @@
                 </mat-form-field>
                 <mat-icon class="icon" color="primary">arrow_right_alt</mat-icon>
             
-                <mat-form-field appearance="standard"  fxFlex="35">
+                <mat-form-field appearance="standard"  fxFlex="29">
                         <mat-label>To</mat-label>
-                        <input matInput placeholder="please search" formControlName="city">
+                        <input matInput placeholder="please search" formControlName="city" readonly="readonly">
                         
                         </mat-form-field>
-                        <mat-icon class="search">search</mat-icon>
+                        <button mat-button>
+                        <mat-icon class="search" (click)="openDialog()">search</mat-icon>
+                      </button>
                         
             </div>
            
@@ -38,7 +40,7 @@
                       </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="end end">
-                    <button mat-raised-button color="primary"  (click)="show()" >Search</button>
+                    <button mat-raised-button color="primary" (click)="show()" >Search</button>
                 </div>
              
         </mat-tab>
