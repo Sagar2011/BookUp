@@ -22,13 +22,16 @@ import {MatNativeDateModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { MapModelComponent } from './map-model/map-model.component';
+import { PaymentComponent } from './payment/payment.component';
+import { DemoMaterialModule } from './material-module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     DashboardComponent,
-    MapModelComponent
+    MapModelComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { MapModelComponent } from './map-model/map-model.component';
     MatNativeDateModule,
     MatSelectModule,
     MatButtonModule,
+    DemoMaterialModule,
     HttpClientModule
  
   ],
