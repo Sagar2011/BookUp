@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -8,13 +8,14 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
   ReactiveFormsModule,
   FormsModule
 } from '@angular/forms';
+import { AuthInterceptorService } from './auth-interceptor.service';
 import {MatInputModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -22,6 +23,9 @@ import {MatNativeDateModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { MapModelComponent } from './map-model/map-model.component';
+import { LoginDialogBoxComponent } from './login-dialog-box/login-dialog-box.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DriverComponent } from './driver/driver.component';
 import { PaymentComponent } from './payment/payment.component';
 import { DemoMaterialModule } from './material-module';
 
@@ -31,6 +35,8 @@ import { DemoMaterialModule } from './material-module';
     NavbarComponent,
     DashboardComponent,
     MapModelComponent,
+    LoginDialogBoxComponent,
+    DriverComponent,
     PaymentComponent
   ],
   imports: [
@@ -49,11 +55,16 @@ import { DemoMaterialModule } from './material-module';
     MatNativeDateModule,
     MatSelectModule,
     MatButtonModule,
-    DemoMaterialModule,
-    HttpClientModule
- 
+    HttpClientModule,
+    MatDialogModule
+
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true
+    },
+    DemoMaterialModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
