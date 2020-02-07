@@ -4,6 +4,7 @@ import { MapModelComponent } from './map-model/map-model.component';
 import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
 import { LoginDialogBoxComponent } from 'src/app/login-dialog-box/login-dialog-box.component';
 import { DriverComponent } from 'src/app/driver/driver.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 const routes: Routes = [
@@ -11,8 +12,8 @@ const routes: Routes = [
   {path: '', component: DashboardComponent},
   {path: 'search', component: DashboardComponent},
   { path: 'login', component: LoginDialogBoxComponent },
-  { path: 'book', component: DriverComponent }
-
+  { path: 'book', component: DriverComponent },
+  { path: 'payment', component: PaymentComponent, pathMatch: 'full'}
 ];
 
 @NgModule({

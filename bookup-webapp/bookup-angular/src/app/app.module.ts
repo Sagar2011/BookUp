@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -9,7 +11,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import {
   ReactiveFormsModule,
   FormsModule
@@ -25,6 +26,8 @@ import { MapModelComponent } from './map-model/map-model.component';
 import { LoginDialogBoxComponent } from './login-dialog-box/login-dialog-box.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DriverComponent } from './driver/driver.component';
+import { PaymentComponent } from './payment/payment.component';
+import { DemoMaterialModule } from './material-module';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { DriverComponent } from './driver/driver.component';
     DashboardComponent,
     MapModelComponent,
     LoginDialogBoxComponent,
-    DriverComponent
+    DriverComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +62,8 @@ import { DriverComponent } from './driver/driver.component';
   providers: [
     {
       provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true
-    }
+    },
+    DemoMaterialModule
   ],
   bootstrap: [AppComponent]
 })
