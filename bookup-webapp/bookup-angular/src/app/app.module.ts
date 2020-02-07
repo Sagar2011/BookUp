@@ -31,6 +31,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DriverComponent } from './driver/driver.component';
 import { PaymentComponent } from './payment/payment.component';
 import { DemoMaterialModule } from './material-module';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DemoMaterialModule } from './material-module';
     BookingHistoryComponent,
  
     LoginDialogBoxComponent,
-    DriverComponent
+    DriverComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
