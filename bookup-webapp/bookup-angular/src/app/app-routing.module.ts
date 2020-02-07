@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { NavbarComponent} from '../app/navbar/navbar.component';
+import { MapModelComponent } from './map-model/map-model.component';
+
 
 const routes: Routes = [
-  { path: 'navbar', component: NavbarComponent, pathMatch: 'full'},
+  {path: 'map' , component: MapModelComponent}
 ];
 
 @NgModule({
