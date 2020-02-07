@@ -45,7 +45,8 @@ import { MapModelComponent } from './map-model/map-model.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
  
   ],
   providers: [],
