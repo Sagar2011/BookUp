@@ -1,21 +1,3 @@
-# BookUp
-
-hii
-
-FROM maven:3.6-jdk-8 AS build
-COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src src
-RUN mvn -f pom.xml clean package -DskipTests=true
-
-
-FROM openjdk:8
-#EXPOSE 9000
-COPY --from=build /target/customerInformation-0.0.1-SNAPSHOT.jar poc.jar
-ENTRYPOINT ["java","-jar","poc.jar"]
-
-
-################
 # ----------------------------#
 #        JAVA DEPENDENCY      #
 # ----------------------------#
@@ -29,7 +11,8 @@ COPY pom.xml /webappserver/
 
 # Expected to download dependencies but not build
 # dependencies will be in /root/.m2
-RUN mvn dependency:go-offline
+ENV MVN_LOCAL_REPO=/maven/home
+RUN mvn -Dmaven.repo.local=$MVN_LOCAL_REPO dependency:go-offline
 
 # ----------------------------#
 #         UI BUILD            #
@@ -40,22 +23,17 @@ RUN mkdir /webapp
 
 WORKDIR /webapp
 
-COPY angular-security/package.json /webapp/
-# Webapp
+COPY WebApp/package.json /webapp/
+
 RUN npm install
 
-COPY ./angular-security /webapp/
+COPY ./WebApp /webapp/
 
-RUN ls -ltr /webapp
+RUN ls -la /webapp
 
-# build the UI
-RUN npm run build
+RUN npm run build -- --prod
 
-RUN ls -ltr ../
-
-RUN ls -ltr .
-
-RUN ls -ltr /webapp
+RUN ls -la /webapp
 
 # ----------------------------#
 #        JAVA BUILD           #
@@ -79,13 +57,13 @@ RUN rm -rf /webappserver/src/main/resources/static
 RUN mkdir -p /webappserver/src/main/resources/static
 
 # Now copy maven dependencies cached from earlier stage
-COPY --from=webapp_server_maven_cache /root/.m2 /root/.m2
+COPY --from=webapp_server_maven_cache /maven/home /maven/home
 
 # Now copy webapp (webclient) distribution for packaging with JAR
 COPY --from=webapp_build /webapp/dist/ /webappserver/src/main/resources/static/
 
 # Build now, which should happen quick
-RUN mvn clean package -DskipTests=true
+RUN mvn -Dmaven.repo.local=$MVN_LOCAL_REPO clean package -DskipTests=true
 
 # If you choose to test it in a debug mode, this will be the end of Dockerfile
 # ENTRYPOINT ["mvn", "spring-boot:run"]
@@ -99,10 +77,10 @@ FROM maven:3.6-jdk-8
 RUN mkdir /webappserver
 
 WORKDIR /webappserver
-# EXPOSE 8000
+
 # Copy the built service jars and resources
 COPY --from=webapp_server_build /webappserver/target /webappserver/target
 
 RUN ls -ltr /webappserver/
-# kuratorWebApp-0.0.1-SNAPSHOT.jar
-CMD ["java", "-jar", "target/demo-0.0.1-SNAPSHOT.jar"]
+
+ENTRYPOINT ["java", "-jar", "target/WebAppMicroservice.jar"]
