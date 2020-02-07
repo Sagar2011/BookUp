@@ -1,0 +1,21 @@
+
+.example-card {
+    margin-top: 150px;
+   
+ 
+}
+.card{
+   
+    height: 580px;
+    }
+.icon{
+    margin-top:30px;
+    font-size: 45px;
+    }
+.background{
+    background-image: url('https://img.huffingtonpost.com/asset/5824ce1e180000290030d430.jpeg?cache=UFjHVm1LsC&ops=crop_0_449_3318_1643%2Cscalefit_720_noupscale&format=webp');
+     background-size: cover;
+}
+.search{
+    margin-top:35px;
+}

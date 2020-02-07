@@ -62,8 +62,6 @@ jobs:
 
       # run tests!
       - run: npm run test -- --watch=false --karma-config=karma.conf.js
-      # run lint
-      - run: npm run lint
 
 workflows:  
   version: 2  
