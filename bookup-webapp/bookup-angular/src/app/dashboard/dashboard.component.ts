@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MapModelComponent} from '../map-model/map-model.component';
 interface TimeSlot {
   value: string;
   viewValue: string;
@@ -12,7 +14,7 @@ interface TimeSlot {
 
 export class DashboardComponent implements OnInit {
   _isDisabled:boolean;
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -53,17 +55,28 @@ export class DashboardComponent implements OnInit {
     city: new FormControl({value: ' ', disabled: true},),
     tripDate:new FormControl(''),
     timeSlot:new FormControl(''),
-    city_from: new FormControl({value: ' Banglore', disabled: true},),
+    city_from: new FormControl({value:'Banglore', disabled: true},),
     
   });
    todaydate:Date = new Date();
   set isDisabled(value: boolean) {
     this._isDisabled = value;
     if(value) {
-     this.form.controls['name'].disable();
+     this.form.controls['city_from'].disable();
     } 
    }
    show(){
      console.log("formvalue",this.form.value);
    }
+   openDialog(): void {
+    const dialogRef = this.dialog.open(MapModelComponent, {
+      width: '750px',
+    
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      
+    });
+  }
 }

@@ -21,6 +21,7 @@ import {MatNativeDateModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { MapModelComponent } from './map-model/map-model.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MapModelComponent } from './map-model/map-model.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
  
   ],
   providers: [],
