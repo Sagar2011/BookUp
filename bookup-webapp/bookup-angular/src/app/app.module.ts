@@ -15,9 +15,9 @@ import {
   ReactiveFormsModule,
   FormsModule
 } from '@angular/forms';
+import {MatInputModule, MatProgressSpinnerModule} from '@angular/material';
 
 import { AuthInterceptorService } from './auth-interceptor.service';
-import {MatInputModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
@@ -31,6 +31,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DriverComponent } from './driver/driver.component';
 import { PaymentComponent } from './payment/payment.component';
 import { DemoMaterialModule } from './material-module';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -38,11 +39,12 @@ import { DemoMaterialModule } from './material-module';
     NavbarComponent,
     DashboardComponent,
     MapModelComponent,
+    PaymentComponent,
     BookingHistoryComponent,
  
     LoginDialogBoxComponent,
     DriverComponent,
-    PaymentComponent
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +62,7 @@ import { DemoMaterialModule } from './material-module';
     MatNativeDateModule,
     MatSelectModule,
     MatButtonModule,
+    DemoMaterialModule,
     HttpClientModule,
     MatDialogModule
 
