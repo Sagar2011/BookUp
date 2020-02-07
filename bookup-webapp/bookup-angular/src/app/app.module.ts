@@ -15,7 +15,7 @@ import {
   ReactiveFormsModule,
   FormsModule
 } from '@angular/forms';
-import {MatInputModule} from '@angular/material';
+import {MatInputModule, MatProgressSpinnerModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
@@ -31,7 +31,7 @@ import { DemoMaterialModule } from './material-module';
     NavbarComponent,
     DashboardComponent,
     MapModelComponent,
-    PaymentComponent
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,8 +50,8 @@ import { DemoMaterialModule } from './material-module';
     MatSelectModule,
     MatButtonModule,
     DemoMaterialModule,
-    HttpClientModule
- 
+    HttpClientModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
