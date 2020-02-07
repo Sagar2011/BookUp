@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { LocationService } from '../location.service';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import { async } from '@angular/core/testing';
 
 declare var ol: any;
 @Component({
@@ -57,9 +58,9 @@ export class MapModelComponent implements OnInit {
 
   setCenter() {
     if(!Object.values(this.choice.value).includes('')){
-     this.location.getLocationByName(this.choice.value).subscribe( data =>{
-          this.SaveTableAsync(data[0]);
-          this.choice.reset();
+      console.log('daadadadada' + this.choice.value);
+     this.location.getLocationByName(this.choice.value).subscribe( async data =>{
+          await this.SaveTableAsync(data[0]);
         });      
     } else {
       console.log('else part')
@@ -101,10 +102,9 @@ export class MapModelComponent implements OnInit {
   }
 
   SaveTableAsync(data){
-    this.destLat = data.lat;
-    this.destLong = data.lon;
-    console.log(this.destLat + '' +this.destLong);
-
+    this.destLat = parseFloat(data.lat);
+    this.destLong = parseFloat(data.lon);
+    console.log(this.destLat + ' ' +this.destLong);
     this.add_map_point(this.destLat,this.destLong);
     this.kmDistance = this.distance(this.destLat, this.destLong);
   /* Adding line in the map*/
@@ -133,7 +133,22 @@ export class MapModelComponent implements OnInit {
   linie2.setStyle(linie2style);
   this.map.addLayer(linie2);
   linie2.set('name','path');
-  }
+  this.choice.reset({
+    'enterLocation': ''
+  });
+  const layersToRemove = [];
+    this.map.getLayers().forEach(layer => {
+      if (
+        layer.get("name") !== undefined &&
+        layer.get("name") === "selectvector"
+      ) {
+        layersToRemove.push(layer);
+      }
+    });
+    if(layersToRemove.length > 2) {
+      this.clearMapV();
+    }
+    }
   add_map_point(lat, lng) {
     this.vectorLayer = new ol.layer.Vector({
       source: new ol.source.Vector({
@@ -208,16 +223,15 @@ export class MapModelComponent implements OnInit {
 
 
     const len = layersToRemove.length;
-    // if(len > 2){
-    //   for(let i = len-1; i >=2; i--){
-    //     this.map.removeLayer(layersToRemove[i]);
-    //   }
-    // } else{
       this.map.removeLayer(layersToRemove[len - 2]);
     // }
 
     const len1 = pathToReomove.length;
-    this.map.removeLayer(pathToReomove[len1-1]);
+    if(len1 > 2) {
+      this.map.removeLayer(pathToReomove[len1-2]);
+    } else{
+      this.map.removeLayer(pathToReomove[len1-1]);
+    }
   }
 
 
