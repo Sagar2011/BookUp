@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 @Service
 public class PaymentService {
@@ -14,7 +15,7 @@ public class PaymentService {
     private PayRepo payRepo;
 
 
-    public boolean payment(Payment payment){
+    public boolean paymentPost(Payment payment){
         try{
             payRepo.save(payment);
             return true;

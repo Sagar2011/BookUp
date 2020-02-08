@@ -2,28 +2,33 @@ package com.bookup.booking.model;
 
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 public class Payment {
 
-    @Id @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
+    @Id @Type(type = "uuid-char") @Column(length = 100)
     private UUID paymentId;
-    private int userId;
-    private UUID bookingId;
+    private String userId;
+    private String bookingId;
+    private String cardNumber;
     private String cardName;
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
     public Payment(){
 
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public UUID getPaymentId() {
@@ -34,19 +39,19 @@ public class Payment {
         this.paymentId = paymentId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public UUID getBookingId() {
+    public String getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(UUID bookingId) {
+    public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
     }
 

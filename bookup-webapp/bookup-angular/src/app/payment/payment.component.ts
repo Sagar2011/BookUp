@@ -5,6 +5,8 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MatDatepicker} from '@angular/material/datepicker';
 import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
+import { BookingService } from '../booking.service';
+import { Router } from '@angular/router';
 const moment = _rollupMoment || _moment;
 
 export const MY_FORMATS = {
@@ -40,17 +42,20 @@ export const MY_FORMATS = {
 })
 export class PaymentComponent implements OnInit {
   public cardForm: FormGroup;
-  
-  // today: number = Date.now();
-  constructor() { }
+  books: any;
+  priceRate: any;
+  constructor(private book:BookingService, private route:Router) { }
   isActive = false;
+  paymentInfo ={ cardNumber: '' , cardName: '' , bookingId:''};
   ngOnInit() {
-    // console.log('date::',this.today);
     this.cardForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       number: new FormControl('', [Validators.required, Validators.minLength(16)]),
-      // date: new FormControl('', [Validators.required]),
       cvv: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    });
+    this.book.getBooks().subscribe(data =>{
+      this.books = data;
+      this.priceRate = this.books.price;
     });
   }
   currentDate: Date = new Date();
@@ -80,6 +85,13 @@ export class PaymentComponent implements OnInit {
   public payment = (cardFormValue) => {
     if (this.cardForm.valid) {
       console.log('inside payment::',cardFormValue);
+      this.paymentInfo.cardNumber= cardFormValue.number;
+      this.paymentInfo.cardName = cardFormValue.name;
+      this.paymentInfo.bookingId = this.books.bookId;
+      console.log('inside ::',this.paymentInfo);
+      this.book.payment(this.paymentInfo).subscribe(response=>{
+        this.route.navigate(['history']);
+      });
     }
   }
  

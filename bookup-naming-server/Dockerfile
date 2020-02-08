@@ -6,6 +6,6 @@ RUN mvn -f pom.xml clean package -DskipTests=true
 
 
 FROM openjdk:8
-#EXPOSE 8761
+EXPOSE 8761
 COPY --from=build /target/DiscoveryServer.jar discovery.jar
 ENTRYPOINT ["java","-jar","discovery.jar"]

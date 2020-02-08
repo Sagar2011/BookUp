@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bookup.booking.service.DriverService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 @RestController
@@ -44,11 +45,15 @@ public class BookControl {
 	}
 
 	@PostMapping("/booking")
-	ResponseEntity<?> postTicket(@RequestBody Booking booking){
+	ResponseEntity<?> postTicket(@RequestBody Booking booking, HttpServletRequest httpServletRequest){
 		try {
+			String userId = driverService.readAllCookies(httpServletRequest);
+			booking.setUserId(userId);
 			booking.setPaymentStatus(PaymentStatus.PENDING);
+			booking.setBookingId(UUID.randomUUID());
 			bookingService.bookTicket(booking);
-			return new ResponseEntity<>("saved succesfully",HttpStatus.OK);
+			int statusCode =200;
+			return new ResponseEntity<>(booking.getBookingId().toString(),HttpStatus.OK);
 		}catch(Exception ex) {
 			return new ResponseEntity<>("error in server",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -64,15 +69,23 @@ public class BookControl {
 	}
 
 	@PostMapping("/payment")
-	ResponseEntity<?> payTickets(@RequestBody Payment payment, @RequestParam UUID bookId){
+	ResponseEntity<?> payTickets(@RequestBody Payment payment, HttpServletRequest httpServletRequest){
 		try {
-			payment.setBookingId(bookId);
-			boolean status = paymentService.payment(payment);
-			 Booking booking = bookingService.getBooking(bookId);
+			String userId = driverService.readAllCookies(httpServletRequest);
+			payment.setUserId(userId);
+			payment.setPaymentId(UUID.randomUUID());
+			payment.setPaymentStatus(PaymentStatus.SUCCESS);
+			boolean status = paymentService.paymentPost(payment);
+			 Booking booking = bookingService.getBooking(UUID.fromString(payment.getBookingId()));
 			 booking.setPaymentStatus(PaymentStatus.SUCCESS);
 			 bookingService.bookTicket(booking);
 			return new ResponseEntity<>("payment succesfully",HttpStatus.OK);
 		}catch(Exception ex) {
+			Booking booking = bookingService.getBooking(UUID.fromString(payment.getBookingId()));
+			booking.setPaymentStatus(PaymentStatus.FAILED);
+			payment.setPaymentStatus(PaymentStatus.FAILED);
+			boolean status = paymentService.paymentPost(payment);
+			bookingService.bookTicket(booking);
 			return new ResponseEntity<>("error in server",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

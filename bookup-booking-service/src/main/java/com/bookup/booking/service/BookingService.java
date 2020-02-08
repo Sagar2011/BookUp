@@ -22,5 +22,5 @@ public class BookingService {
         return (ArrayList<Booking>) bookRepo.findAll();
     }
 
-    public Booking getBooking(UUID id){ return bookRepo.findById(id).get(); }
+    public Booking getBooking(UUID id){ return bookRepo.findByBookingId(id); }
 }
