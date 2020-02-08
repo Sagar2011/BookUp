@@ -2,6 +2,23 @@
 
 hii
 
+version: '3.1'
+
+services:
+
+  mongodb:
+    image: mongo
+    #network_mode: host
+    restart: on-failure
+    volumes:
+    - /var/lib/docker/volumes/pocVolume/_data/mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+        - 27017:27017
+
+
 FROM maven:3.6-jdk-8 AS build
 COPY pom.xml .
 RUN mvn dependency:go-offline
