@@ -15,6 +15,7 @@ import {
   ReactiveFormsModule,
   FormsModule
 } from '@angular/forms';
+
 import { AuthInterceptorService } from './auth-interceptor.service';
 import {MatInputModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
@@ -23,6 +24,8 @@ import {MatNativeDateModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { MapModelComponent } from './map-model/map-model.component';
+import {MatTableModule} from '@angular/material/table';
+import { BookingHistoryComponent } from './booking-history/booking-history.component';
 import { LoginDialogBoxComponent } from './login-dialog-box/login-dialog-box.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DriverComponent } from './driver/driver.component';
@@ -35,6 +38,8 @@ import { DemoMaterialModule } from './material-module';
     NavbarComponent,
     DashboardComponent,
     MapModelComponent,
+    BookingHistoryComponent,
+ 
     LoginDialogBoxComponent,
     DriverComponent,
     PaymentComponent
@@ -56,7 +61,8 @@ import { DemoMaterialModule } from './material-module';
     MatSelectModule,
     MatButtonModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule
 
   ],
   providers: [
