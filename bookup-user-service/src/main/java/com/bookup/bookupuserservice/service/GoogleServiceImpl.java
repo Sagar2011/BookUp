@@ -1,63 +1,97 @@
 package com.bookup.bookupuserservice.service;
 
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.social.google.api.Google;
-import org.springframework.social.google.api.impl.GoogleTemplate;
-import org.springframework.social.google.api.plus.Person;
-import org.springframework.social.google.connect.GoogleConnectionFactory;
-import org.springframework.social.oauth2.OAuth2Parameters;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.bookup.bookupuserservice.exception.UserNotFoundException;
 import com.bookup.bookupuserservice.model.User;
+import com.bookup.bookupuserservice.repo.IUserRepository;
 
 @Service
 public class GoogleServiceImpl implements IGoogleService {
-	
-	@Value("${spring.social.google.app-id}")
-	private String googleId;
-	
-	@Value("${spring.social.google.app-secret}")
-	private String googleSecret;
-	
-	@Value("${redirect_url}")
-	private String redirectUrl;
 
-	@Autowired 
-	private User user;
+	@Value("${google.base.url}")
+	private String baseUrl;
 
-	// Creates Google OAuth Connection
-	private GoogleConnectionFactory createGoogleConnection() {
-		return new GoogleConnectionFactory(googleId, googleSecret);
+	@Value("${spring.security.oauth2.client.registration.google.client-id}")
+	String clientId;
+
+	@Value("${spring.security.oauth2.client.registration.google.client-secret}")
+	String clientSecret;
+
+	@Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
+	String redirectUrl;
+
+	@Autowired
+	RestTemplate restTemplate;
+
+	@Autowired
+	User user;
+
+	@Value("${google.access.token.url}")
+	String googleAccessTokenUrl;
+
+	@Value("${google.userdetails.url}")
+	String googleProfileUrl;
+
+	@Autowired
+	private IUserRepository userRepo;
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	// For posting the user data into the user database
+	@Override
+	public void addUserData(User user) throws DuplicateKeyException {
+		if (userRepo.findByEmail(user.getEmail()) == null) {
+			userRepo.save(user);
+		} else {
+			logger.error("User Already exists with Email " + user.getEmail());
+		}
 	}
 
-	// Opens the Google Consent Form
-	@Override
-	public String googlelogin() {
-		OAuth2Parameters parameters = new OAuth2Parameters();
-		parameters.setRedirectUri(redirectUrl);
-		parameters.setScope("profile email");
-		return createGoogleConnection().getOAuthOperations().buildAuthenticateUrl(parameters);
+	public String getAccessToken(String code) throws UserNotFoundException {
+		String url = googleAccessTokenUrl;
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.set("Accept", "application/json");
+		UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(url)
+				.queryParam("clientId", this.clientId).queryParam("client_secret", this.clientSecret)
+				.queryParam("code", code).queryParam("grant_type", "authorization_code")
+				.queryParam("redirect_uri", this.redirectUrl);
+		HttpEntity<String> request = new HttpEntity<>(httpHeaders);
+		ResponseEntity<JSONObject> result = this.restTemplate.postForEntity(uriComponentsBuilder.toUriString(), request,
+				JSONObject.class);
+		if (result.getBody().get("access_token").toString().isEmpty())
+			throw new UserNotFoundException("There is some problwm with the generation of the access token");
+		return (String) result.getBody().get("access_token");
 	}
 
-	// For getting Google oauth access token
-	@Override
-	public String getGoogleAccessToken(String code) {
-		return createGoogleConnection().getOAuthOperations().exchangeForAccess(code, redirectUrl, null)
-				.getAccessToken();
-	}
-
-	// For getting google profile of particular user
-	@Override
-	public User getGoogleUserProfile(String accessToken) {
-		Google google = new GoogleTemplate(accessToken);
-		Person person = google.plusOperations().getGoogleProfile();
-		user.setName(person.getDisplayName());
-		user.setEmail(person.getAccountEmail());
-		user.setAvatarURL(person.getImageUrl());
+	public User getUserProfile(String accessToken) throws UserNotFoundException {
+		String url = googleProfileUrl;
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+//		httpHeaders.set("Accept", "application/json");
+		UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(url).queryParam("access_token",
+				accessToken);
+		ResponseEntity<JSONObject> result = this.restTemplate.getForEntity(uriComponentsBuilder.toUriString(),
+				JSONObject.class);
+		JSONObject userDetails = result.getBody();
+		user.setAvatarURL((String) userDetails.get("picture"));
+		user.setEmail((String) userDetails.get("email"));
+		user.setName((String) userDetails.get("given_name"));
 		user.setLoggedIn(true);
+		this.addUserData(user);
 		return user;
 	}
-
 
 }

@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import com.bookup.bookupuserservice.exception.DatabaseEmptyException;
@@ -33,16 +32,6 @@ public class UserServiceImpl implements IUserService {
 	@Value("${SIGNING_KEY}")
 	public void setSigningkey(String signingkey) {
 		SIGNINGKEY = signingkey;
-	}
-
-	// For posting the user data into the user database
-	@Override
-	public void addUserData(User user) throws DuplicateKeyException {
-		if (userRepo.findByEmail(user.getEmail()) == null) {
-			userRepo.save(user);
-		} else {
-			throw new DuplicateKeyException("User Already exists with Email " + user.getEmail());
-		}
 	}
 
 	// For getting the user profile using username from the database

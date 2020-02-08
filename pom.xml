@@ -19,6 +19,7 @@
 		<module>bookup-naming-server</module>
 		<module>bookup-api-gateway</module>
 		<module>bookup-webapp</module>
+		<module>bookup-booking-service</module>
 	</modules>
 	
 		<build>
