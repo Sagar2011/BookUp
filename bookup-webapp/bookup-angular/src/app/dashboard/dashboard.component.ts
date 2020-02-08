@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit {
 
       
       this.form.controls['distance'].setValue(result.data.kmDistance);
-      this.form.controls['city'].setValue(result.data.destination);
+      this.form.controls['city'].setValue(result.data.destination[0]);
       console.log("form final value-->",this.form.value);
     });
   }

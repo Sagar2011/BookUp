@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { BookingService } from '../booking.service';
-
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -9,8 +7,7 @@ import { BookingService } from '../booking.service';
 })
 export class SearchComponent implements OnInit {
   public TripData : any;
-  drivers: any;
-  constructor(private book:BookingService) { }
+  constructor() { }
 
   ngOnInit() {
     this.TripData = sessionStorage.getItem('tripData');
@@ -23,10 +20,6 @@ export class SearchComponent implements OnInit {
     this.booking_form.controls['tripDate'].setValue(tripInfo.tripDate);
     this.booking_form.controls['timeSlot'].setValue(tripInfo.timeSlot);
 
-    this.book.getDrivers().subscribe(data=>{
-      this.drivers = data;
-      console.log(this.drivers);
-    })
   }
   booking_form = new FormGroup({
     city: new FormControl({value:'', disabled: true},),
@@ -36,5 +29,7 @@ export class SearchComponent implements OnInit {
     distance:new FormControl({value:'', disabled: true},),
   });
 
-
+  getUser(){
+    
+  }
 }
