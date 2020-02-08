@@ -80,6 +80,8 @@ export class DashboardComponent implements OnInit {
    }
    show(){
      console.log("formvalue",this.form.value);
+     const tripData = this.form.value;
+     sessionStorage.setItem('tripData', JSON.stringify(tripData));
           this.dialog.open(LoginDialogBoxComponent, {
             width: '400px', height: '250px',
           });
