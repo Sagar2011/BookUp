@@ -6,6 +6,6 @@ RUN mvn -f pom.xml clean package -DskipTests=true
 
 
 FROM openjdk:8
-#EXPOSE 8080
+EXPOSE 8080
 COPY --from=build /target/ApiGatewayServer.jar gateway.jar
 ENTRYPOINT ["java","-jar","gateway.jar"]

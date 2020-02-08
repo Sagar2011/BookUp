@@ -1,18 +1,14 @@
 package com.bookup.booking.model;
 
-import org.hibernate.annotations.GenericGenerator;
-
+import org.hibernate.annotations.Type;
+import com.bookup.booking.model.PaymentStatus;
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 public class Booking {
 
-	@Id @GeneratedValue(generator = "UUID")
-	@GenericGenerator(
-			name = "UUID",
-			strategy = "org.hibernate.id.UUIDGenerator"
-	)
+	@Id @Type(type = "uuid-char") @Column(length = 100)
 	private UUID bookingId;
 	private int driverId;
 	private String userId;
@@ -24,8 +20,8 @@ public class Booking {
 	private double distance;
 	@Enumerated(EnumType.STRING)
 	private PaymentStatus paymentStatus;
+
 	public Booking() {
-		
 	}
 
 	public PaymentStatus getPaymentStatus() {

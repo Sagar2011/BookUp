@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'history', component:BookingHistoryComponent},
   {path: 'search', component: SearchComponent},
   { path: 'login', component: LoginDialogBoxComponent },
-  { path: 'payment', component: PaymentComponent, pathMatch: 'full'}
+  { path: 'payment', component: PaymentComponent}
 
 ];
 

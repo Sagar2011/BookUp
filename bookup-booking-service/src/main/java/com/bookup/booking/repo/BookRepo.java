@@ -8,6 +8,6 @@ import com.bookup.booking.model.Booking;
 import java.util.UUID;
 
 @Repository
-public interface BookRepo extends JpaRepository<Booking, UUID>{
-
+public interface BookRepo extends JpaRepository<Booking, String>{
+    Booking findByBookingId(UUID bookingId);
 }

@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface PayRepo extends JpaRepository<Payment, UUID> {
+public interface PayRepo extends JpaRepository<Payment, String> {
 }

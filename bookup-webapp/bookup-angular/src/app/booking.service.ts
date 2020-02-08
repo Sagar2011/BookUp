@@ -1,17 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpHeaders} from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { FormGroup } from '@angular/forms';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    responseType: "text" as "json"
+};
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
-
+  
   private subject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private driver: BehaviorSubject<Object> = new BehaviorSubject<Object> (Object);
+  private bookDetail: BehaviorSubject<Object> = new BehaviorSubject<Object> (Object);
   constructor(private http: HttpClient) { }
 
+  getBooks(){
+    return this.bookDetail.asObservable();
+  }
+
+  postBooks(data){
+    this.bookDetail.next(data);
+  }
 
   getStatus(){
     return this.subject.asObservable();
@@ -32,7 +43,11 @@ export class BookingService {
     return this.http.get(`/book/driver`);
   }
 
-  bookTickets(data): Observable<any>{
-    return this.http.post('/book/booking',data);
+  bookTicket(data:any): Observable<any> { 
+    return this.http.post('/book/booking',data,httpOptions);
+  }
+
+  payment(data): Observable<any> {
+    return this.http.post('/book/payment',data,httpOptions);
   }
 }
