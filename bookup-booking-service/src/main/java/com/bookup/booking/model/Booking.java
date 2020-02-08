@@ -1,8 +1,7 @@
 package com.bookup.booking.model;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-
+import com.bookup.booking.model.PaymentStatus;
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -21,8 +20,8 @@ public class Booking {
 	private double distance;
 	@Enumerated(EnumType.STRING)
 	private PaymentStatus paymentStatus;
+
 	public Booking() {
-		
 	}
 
 	public PaymentStatus getPaymentStatus() {
