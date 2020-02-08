@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'login', component: LoginDialogBoxComponent },
   { path: 'book', component: DriverComponent },
   { path: 'payment', component: PaymentComponent, pathMatch: 'full'}
+
 ];
 
 @NgModule({
