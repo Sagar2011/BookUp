@@ -28,11 +28,11 @@ import {MatTableModule} from '@angular/material/table';
 import { BookingHistoryComponent } from './booking-history/booking-history.component';
 import { LoginDialogBoxComponent } from './login-dialog-box/login-dialog-box.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { DriverComponent } from './driver/driver.component';
 import { PaymentComponent } from './payment/payment.component';
 import { DemoMaterialModule } from './material-module';
 import { SearchComponent } from './search/search.component';
 import { DriverCardComponent } from './driver-card/driver-card.component';
+import { ReviewComponent } from './review/review.component';
 
 
 @NgModule({
@@ -45,9 +45,9 @@ import { DriverCardComponent } from './driver-card/driver-card.component';
     BookingHistoryComponent,
  
     LoginDialogBoxComponent,
-    DriverComponent,
     SearchComponent,
-    DriverCardComponent
+    DriverCardComponent,
+    ReviewComponent
   ],
  
   imports: [
