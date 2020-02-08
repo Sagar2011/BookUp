@@ -6,7 +6,6 @@ import { BookingHistoryComponent } from '../app/booking-history/booking-history.
 
 import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
 import { LoginDialogBoxComponent } from 'src/app/login-dialog-box/login-dialog-box.component';
-import { DriverComponent } from 'src/app/driver/driver.component';
 import { PaymentComponent } from './payment/payment.component';
 import { SearchComponent } from './search/search.component';
 
@@ -17,7 +16,6 @@ const routes: Routes = [
   {path: 'history', component:BookingHistoryComponent},
   {path: 'search', component: SearchComponent},
   { path: 'login', component: LoginDialogBoxComponent },
-  { path: 'book', component: DriverComponent },
   { path: 'payment', component: PaymentComponent, pathMatch: 'full'}
 
 ];
