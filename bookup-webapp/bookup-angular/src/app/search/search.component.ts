@@ -17,7 +17,6 @@ export class SearchComponent implements OnInit {
     this.book.getDrivers().subscribe(data=>{
       this.drivers = data;
       console.log(this.drivers);
-    })
+    });
   }
-
 }

@@ -10,7 +10,8 @@
     <div fxFlex="20">    <p> {{ price | currency:'&#8377;' }} </p>
     </div>
     <div fxFlex="20">
-      <button mat-fab color="primary">Book</button>
+      <button *ngIf="status" mat-fab color="primary" (click)="booking()">Book</button>
+      <button *ngIf="!status" mat-fab color="warn" (click)="cancel()">cancel</button>
     </div>
     </div>
     <mat-card-actions>
