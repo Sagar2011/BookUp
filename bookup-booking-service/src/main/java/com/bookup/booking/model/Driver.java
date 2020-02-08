@@ -14,6 +14,7 @@ public class Driver {
 	private int driverId;
 	private String driverName;
 	private float rating;
+	private float driverprice;
 	private ArrayList<String> languages;
 	public Driver(int driverId, String driverName, float rating, ArrayList<String> languages) {
 		super();
@@ -25,6 +26,15 @@ public class Driver {
 	public Driver() {
 		super();
 	}
+
+	public float getDriverprice() {
+		return driverprice;
+	}
+
+	public void setDriverprice(float driverprice) {
+		this.driverprice = driverprice;
+	}
+
 	public int getDriverId() {
 		return driverId;
 	}

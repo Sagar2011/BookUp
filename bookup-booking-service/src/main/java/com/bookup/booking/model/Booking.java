@@ -1,25 +1,49 @@
 package com.bookup.booking.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 public class Booking {
-	
-	@Id
-	private int bookingId;
-	private String driverId;
+
+	@Id @GeneratedValue(generator = "UUID")
+	@GenericGenerator(
+			name = "UUID",
+			strategy = "org.hibernate.id.UUIDGenerator"
+	)
+	private UUID bookingId;
+	private int driverId;
 	private String userId;
 	private String source;
 	private String destination;
+	private String pickDate;
 	private String pickTime;
 	private double price;
 	private double distance;
-	
+	@Enumerated(EnumType.STRING)
+	private PaymentStatus paymentStatus;
 	public Booking() {
 		
 	}
-	
+
+	public PaymentStatus getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public String getPickDate() {
+		return pickDate;
+	}
+
+	public void setPickDate(String pickDate) {
+		this.pickDate = pickDate;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
@@ -27,19 +51,19 @@ public class Booking {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public int getBookingId() {
+	public UUID getBookingId() {
 		return bookingId;
 	}
 
-	public void setBookingId(int bookingId) {
+	public void setBookingId(UUID bookingId) {
 		this.bookingId = bookingId;
 	}
 
-	public String getDriverId() {
+	public int getDriverId() {
 		return driverId;
 	}
 
-	public void setDriverId(String driverId) {
+	public void setDriverId(int driverId) {
 		this.driverId = driverId;
 	}
 
@@ -83,6 +107,4 @@ public class Booking {
 		this.distance = distance;
 	}
 	
-	
-
 }
