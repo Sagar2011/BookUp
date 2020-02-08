@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MapModelComponent} from '../map-model/map-model.component';
-import { LoginService } from 'src/app/login.service';
+
 import { LoginDialogBoxComponent } from 'src/app/login-dialog-box/login-dialog-box.component';
 
 import { Router } from '@angular/router';
@@ -24,7 +24,7 @@ export interface ResponseModel {
 
 export class DashboardComponent implements OnInit {
   _isDisabled:boolean;
-  constructor(private router: Router, private loginService: LoginService, public dialog: MatDialog) { }
+  constructor(private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
   }
