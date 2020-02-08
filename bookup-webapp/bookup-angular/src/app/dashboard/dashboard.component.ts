@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit {
   }
  
   form = new FormGroup({
-    city: new FormControl(''),
+    destination: new FormControl(''),
     tripDate:new FormControl(''),
     timeSlot:new FormControl(''),
     city_from: new FormControl({value:'Banglore', disabled: true},),
@@ -96,14 +96,8 @@ export class DashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log('result------>',result.data.kmDistance)
-
-    this.form.value.distance=result.data.kmDistance;
-    
-    this.form.value.city=result.data.destination;
-
-      
       this.form.controls['distance'].setValue(result.data.kmDistance);
-      this.form.controls['city'].setValue(result.data.destination[0]);
+      this.form.controls['destination'].setValue(result.data.destination[0]);
       console.log("form final value-->",this.form.value);
     });
   }

@@ -8,7 +8,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="standard"  fxFlex="40">
                         <mat-label>To</mat-label>
-                        <input matInput placeholder="please search" formControlName="city" >
+                        <input matInput placeholder="please search" formControlName="destination" >
                 </mat-form-field>
                 </div>
                 <div  fxLayout="row" fxLayoutAlign="space-between start">
@@ -36,10 +36,8 @@
 <div *ngFor="let item of drivers">
 <app-driver-card [item]="item"></app-driver-card>
 ----------------------------------------------------------------------------------------------
-<buttton (click)="getUser()"> get
+<button mat-raised-button color="primary" (click)="postData()" >posts</button>
 
-  
-</buttton>
 
 
 ----------------------------------------------------------------------------------------------------- 

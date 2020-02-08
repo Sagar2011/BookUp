@@ -34,6 +34,7 @@ import { DemoMaterialModule } from './material-module';
 import { SearchComponent } from './search/search.component';
 import { DriverCardComponent } from './driver-card/driver-card.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +49,7 @@ import { DriverCardComponent } from './driver-card/driver-card.component';
     SearchComponent,
     DriverCardComponent
   ],
+ 
   imports: [
     BrowserModule,
     AppRoutingModule,
