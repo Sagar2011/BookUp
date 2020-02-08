@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BookingService } from '../booking.service';
 
 @Component({
   selector: 'app-search',
@@ -7,11 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
   public TripData : any;
-  constructor() { }
+  drivers: any;
+  constructor(private book:BookingService) { }
 
   ngOnInit() {
     this.TripData = sessionStorage.getItem('tripData');
     console.log('Trip data from dashboard::',this.TripData);
+    this.book.getDrivers().subscribe(data=>{
+      this.drivers = data;
+      console.log(this.drivers);
+    })
   }
 
 }

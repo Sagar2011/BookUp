@@ -32,6 +32,7 @@ import { DriverComponent } from './driver/driver.component';
 import { PaymentComponent } from './payment/payment.component';
 import { DemoMaterialModule } from './material-module';
 import { SearchComponent } from './search/search.component';
+import { DriverCardComponent } from './driver-card/driver-card.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { SearchComponent } from './search/search.component';
  
     LoginDialogBoxComponent,
     DriverComponent,
-    SearchComponent
+    SearchComponent,
+    DriverCardComponent
   ],
   imports: [
     BrowserModule,
