@@ -24,7 +24,7 @@ import {MatNativeDateModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { MapModelComponent } from './map-model/map-model.component';
-
+import {MatTableModule} from '@angular/material/table';
 import { BookingHistoryComponent } from './booking-history/booking-history.component';
 import { LoginDialogBoxComponent } from './login-dialog-box/login-dialog-box.component';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -64,7 +64,8 @@ import { SearchComponent } from './search/search.component';
     MatButtonModule,
     DemoMaterialModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule
 
   ],
   providers: [
