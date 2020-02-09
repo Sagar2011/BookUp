@@ -23,4 +23,6 @@ public class BookingService {
     }
 
     public Booking getBooking(UUID id){ return bookRepo.findByBookingId(id); }
+
+    public ArrayList<Booking> getTickets(String userId) { return bookRepo.findByUserId(userId);}
 }

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { AvatarModule } from 'ngx-avatar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -67,7 +68,8 @@ import { ReviewComponent } from './review/review.component';
     DemoMaterialModule,
     HttpClientModule,
     MatDialogModule,
-    MatTableModule
+    MatTableModule,
+    AvatarModule
 
   ],
   providers: [

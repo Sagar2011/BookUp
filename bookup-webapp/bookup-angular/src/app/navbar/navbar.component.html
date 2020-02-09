@@ -1,9 +1,28 @@
-<div class="toolbar" role="banner">
-   
-    <span class="title">Bookup</span>
+<div class="toolbar" role="banner" fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="title" [routerLink]="['/']">Bookup</span>
       <div class="spacer"></div>
     <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://twitter.com/angular" title="Twitter">
     </a>
+        <div fxLayout="row" fxLayoutAlign="end" *ngIf="show">
+            <div fxShow.lt-sm="false" fxShow.gt-md="true" fxShow="true">
+                <p style="padding-right: 15px; margin-top: 22px; font-size: 20px">{{ username | titlecase }}</p>
+            </div>
+            <button mat-icon-button [matMenuTriggerFor]="menu" [ngStyle]="{'background-image': userProfileAvatarUrl , 'background-size': 'cover', 'margin-top': '17px' }">
+                <div mat-card-avatar></div>
+            </button>
+  
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item class="logoutButton" [routerLink]="['/']" routerLinkActive="router-link-active"  style="text-align: center;">
+                    <mat-icon>directions_car</mat-icon>booking
+                </button>
+                <button mat-menu-item class="logoutButton" [routerLink]="['/history']" routerLinkActive="router-link-active"  style="text-align: center;">
+                    <mat-icon>history</mat-icon>history
+                </button>
+                <button mat-menu-item (click)="logout()" routerLinkActive="active" style="text-align: center;">
+                    <mat-icon>power_settings_new</mat-icon>Logout
+                </button>
+            </mat-menu>
+        </div>
   </div>
   
-  <div class="content" role="main">
+  

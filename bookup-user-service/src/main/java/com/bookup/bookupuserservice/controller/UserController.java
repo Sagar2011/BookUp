@@ -3,6 +3,7 @@ package com.bookup.bookupuserservice.controller;
 import java.io.IOException;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,4 @@ public class UserController {
 		String cookiename = jwtTokenCookieName;
 		CookieUtil.clearCookie(response, cookiename);
 	}
-
 }
