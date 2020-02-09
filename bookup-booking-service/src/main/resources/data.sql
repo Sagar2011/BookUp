@@ -1,0 +1,6 @@
+--insert into driver (driver_name, driverprice, languages, rating, driver_id) VALUES ('alex',20,LOAD_FILE('/lang.txt'),4.8, 1);
+--insert into driver (driver_name, driverprice, languages, rating) VALUES ('sandy',12,'('Hindi','Kannada')',4.2);
+--insert into driver (driver_name, driverprice, languages, rating) VALUES ('ram',9,'('Kannada')',3.9);
+--insert into driver (driver_name, driverprice, languages, rating) VALUES ('babu',13,'('English','Kannada')',4.4);
+--insert into driver (driver_name, driverprice, languages, rating) VALUES ('raj',17,'('Hindi','Kannada')',4.6);
+--insertert into driver (driver_name, driverprice, languages, rating) VALUES ('ethan',33,'('English','Hindi','Kannada')',4.9);

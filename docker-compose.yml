@@ -1,0 +1,51 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    ports:
+        - 27017:27017
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: root 
+      MONGO_INITDB_ROOT_PASSWORD: example
+  mysqldb:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_USERNAME: root
+    ports:
+        - "3306:3306"
+  naming-server:
+    build: ./bookup-naming-server
+    ports: 
+        - "8761:8761"
+  api-gateway-server:
+    build: ./bookup-api-gateway
+    ports: 
+        - "8080:8080"
+    depends_on:
+        - naming-server
+  user-server:
+    build: ./bookup-user-service
+    ports: 
+        - "8000:8000"
+    depends_on:
+        - naming-server
+        - api-gateway-server
+        - mysqldb
+        - mongodb
+  booking-server:
+    build: ./bookup-booking-service
+    ports: 
+        - "8500:8500"
+    depends_on:
+        - naming-server
+        - api-gateway-server
+        - mysqldb
+        - mongodb
+  webapp-server:
+    build: ./bookup-webapp
+    ports: 
+        - "8765:8765"
+    depends_on:
+        - naming-server
+        - api-gateway-server
