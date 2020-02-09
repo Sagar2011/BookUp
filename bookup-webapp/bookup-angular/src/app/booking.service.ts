@@ -50,4 +50,8 @@ export class BookingService {
   payment(data): Observable<any> {
     return this.http.post('/book/payment',data,httpOptions);
   }
+
+  getTickets(): Observable<any>{
+    return this.http.get('/book/booking');
+  }
 }

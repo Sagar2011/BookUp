@@ -3,6 +3,8 @@ package com.bookup.booking.controller;
 import com.bookup.booking.model.*;
 import com.bookup.booking.service.BookingService;
 import com.bookup.booking.service.PaymentService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.bookup.booking.service.DriverService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @RestController
@@ -47,22 +50,37 @@ public class BookControl {
 	@PostMapping("/booking")
 	ResponseEntity<?> postTicket(@RequestBody Booking booking, HttpServletRequest httpServletRequest){
 		try {
-			String userId = driverService.readAllCookies(httpServletRequest);
+			String userId = driverService.loadByUsername(httpServletRequest);
 			booking.setUserId(userId);
 			booking.setPaymentStatus(PaymentStatus.PENDING);
 			booking.setBookingId(UUID.randomUUID());
 			bookingService.bookTicket(booking);
-			int statusCode =200;
 			return new ResponseEntity<>(booking.getBookingId().toString(),HttpStatus.OK);
 		}catch(Exception ex) {
+			System.out.println(ex);
 			return new ResponseEntity<>("error in server",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@GetMapping("/booking")
-	ResponseEntity<?> getTicket(){
+	ResponseEntity<?> getTicket(HttpServletRequest httpServletRequest){
 		try {
-			return new ResponseEntity<>(bookingService.getTickets(),HttpStatus.OK);
+			ArrayList<Ticket> tickets = new ArrayList<>();
+			String user = driverService.loadByUsername(httpServletRequest);
+			ArrayList<Booking> bookings = bookingService.getTickets(user);
+			for(Booking list: bookings){
+				Ticket ticket = new Ticket();
+				ticket.setStart(list.getSource());
+				ticket.setEnd(list.getDestination());
+				ticket.setDistance(list.getDistance());
+				ticket.setFare(list.getPrice());
+				ticket.setDriver(driverService.getDriver(list.getDriverId()).getDriverName());
+				ticket.setTrip_date(list.getPickDate());
+				ticket.setTime(list.getPickTime());
+				ticket.setStatus(list.getPaymentStatus().toString());
+				tickets.add(ticket);
+			}
+			return new ResponseEntity<>(tickets,HttpStatus.OK);
 		}catch(Exception ex) {
 			return new ResponseEntity<>("error in server",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -71,7 +89,7 @@ public class BookControl {
 	@PostMapping("/payment")
 	ResponseEntity<?> payTickets(@RequestBody Payment payment, HttpServletRequest httpServletRequest){
 		try {
-			String userId = driverService.readAllCookies(httpServletRequest);
+			String userId = driverService.loadByUsername(httpServletRequest);
 			payment.setUserId(userId);
 			payment.setPaymentId(UUID.randomUUID());
 			payment.setPaymentStatus(PaymentStatus.SUCCESS);
