@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -69,7 +66,7 @@ public class GoogleServiceImpl implements IGoogleService {
 				.queryParam("code", code).queryParam("grant_type", "authorization_code")
 				.queryParam("redirect_uri", this.redirectUrl);
 		HttpEntity<String> request = new HttpEntity<>(httpHeaders);
-		ResponseEntity<JSONObject> result = this.restTemplate.postForEntity(uriComponentsBuilder.toUriString(), request,
+		ResponseEntity<JSONObject> result = this.restTemplate.exchange(uriComponentsBuilder.toUriString(), HttpMethod.POST, request,
 				JSONObject.class);
 		if (result.getBody().get("access_token").toString().isEmpty())
 			throw new UserNotFoundException("There is some problwm with the generation of the access token");

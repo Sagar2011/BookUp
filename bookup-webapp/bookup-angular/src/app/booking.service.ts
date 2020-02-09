@@ -35,4 +35,8 @@ export class BookingService {
   bookTickets(data): Observable<any>{
     return this.http.post('/book/booking',data);
   }
+  getByUserId(): Observable<any> {
+    const userurl = `book/userprofile`;
+    return this.http.get<any>(userurl);
+  }
 }

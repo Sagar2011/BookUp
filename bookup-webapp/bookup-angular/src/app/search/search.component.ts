@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { BookingService } from '../booking.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-search',
@@ -28,21 +29,22 @@ export class SearchComponent implements OnInit {
   filter = 0;
   temp: any;
   driver: any;
+  result;
   ngOnInit() {
     this.TripData = sessionStorage.getItem('tripData');
     console.log('Trip data from dashboard::',this.TripData);
     console.log('city----->', JSON.parse(this.TripData))
     const tripInfo=JSON.parse(this.TripData);
     console.log('dest-->',tripInfo.city);
-    this.booking_form.controls['destination'].setValue(tripInfo.city.toString());
+    this.booking_form.controls['destination'].setValue(tripInfo.destination.toString());
     this.booking_form.controls['distance'].setValue(tripInfo.distance.toFixed(2));
     this.booking_form.controls['pickDate'].setValue(moment(tripInfo.tripDate).format('DD-MM-YYYY'));
     this.booking_form.controls['pickTime'].setValue(moment(tripInfo.timeSlot, ["HH:mm"]).format('hh:mm A'));
 
     this.book.getDrivers().subscribe(data=>{
       this.drivers = data;
-      this.temp = data;
-      console.log(this.drivers);
+      this.temp = this.drivers;
+      console.log(this.temp + 'temp');
     });
     this.book.getRate().subscribe(data =>{
       this.driver = data;
@@ -108,12 +110,15 @@ export class SearchComponent implements OnInit {
       // this.booking_form.driverId= this.driver.driverId);
       this.booking_form.controls['price'].setValue(this.priceRate);
       console.log(Object.values(this.booking_form.value))
-      this.book.bookTickets(this.booking_form.value).subscribe(data=>{
-        if(data.status === 200){
-          this.route.navigate(['/payment']);
-        } else {
-          this.route.navigate(['search']);
-        }
+      this.book.bookTickets(this.booking_form.value).subscribe( async data =>{
+          await this.route.navigate(['payment']);
       });
+      
   }
+  userDetails(){
+  this.book.getByUserId().subscribe(data => {
+    this.result = data;
+    console.log('userDetails',this.result)
+  });
+}
 }

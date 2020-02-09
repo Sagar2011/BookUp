@@ -8,4 +8,6 @@ public interface IUserService {
 
 	User loadByUsername(HttpServletRequest request);
 
+	User findByUserEmail(String email);
+
 }

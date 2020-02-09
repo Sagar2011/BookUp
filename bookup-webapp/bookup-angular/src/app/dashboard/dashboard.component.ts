@@ -97,8 +97,9 @@ export class DashboardComponent implements OnInit {
       console.log('The dialog was closed');
       console.log('result------>',result.data.kmDistance)
       this.form.controls['distance'].setValue(result.data.kmDistance);
-      this.form.controls['city'].setValue(result.data.destination.slice(0,6));
+      this.form.controls['destination'].setValue(result.data.destination.slice(0,6));
       console.log("form final value-->",this.form.value);
     });
   }
+  
 }

@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity webSecurity) {
 		webSecurity.ignoring().antMatchers("/", "/assets/**", "/*.js", "/*.css", "/*.eot", "/*.svg", "/*.woff2",
-				"/*.ttf", "/*.woff", "/*.jpg", "/*.png", "/*.html", "/user/googlelogin", "/user/search");
+				"/*.ttf", "/*.woff", "/*.jpg", "/*.png", "/*.html", "/user/googlelogin", "/user/search", "/book/driver");
 	}
 
 }
