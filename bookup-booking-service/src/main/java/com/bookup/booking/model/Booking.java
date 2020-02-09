@@ -1,7 +1,6 @@
 package com.bookup.booking.model;
 
 import org.hibernate.annotations.Type;
-import com.bookup.booking.model.PaymentStatus;
 import javax.persistence.*;
 import java.util.UUID;
 
